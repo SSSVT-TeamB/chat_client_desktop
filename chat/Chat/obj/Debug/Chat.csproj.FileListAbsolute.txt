@@ -1,0 +1,10 @@
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\bin\Debug\Chat.exe.config
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\bin\Debug\Chat.exe
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\bin\Debug\Chat.pdb
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\obj\Debug\Chat.csprojResolveAssemblyReference.cache
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\obj\Debug\Chat.Form1.resources
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\obj\Debug\Chat.Properties.Resources.resources
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\obj\Debug\Chat.csproj.GenerateResource.Cache
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\obj\Debug\Chat.exe
+c:\users\waithere\documents\visual studio 2015\Projects\Chat\Chat\obj\Debug\Chat.pdb
+C:\Users\Waithere\documents\visual studio 2015\Projects\Chat\Chat\bin\Debug\MySql.Data.dll
