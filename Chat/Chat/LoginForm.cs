@@ -5,14 +5,16 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chat
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
-        public Form1()
+        Thread th;
+        public LoginForm()
         {
             InitializeComponent();
         }
@@ -60,6 +62,18 @@ namespace Chat
                 if(dt.Rows.Count > 0)
                 {
                     MessageBox.Show("Welcome", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    /*this.Close();
+                    th = new Thread(opennewform);
+                    th.SetApartmentState(ApartmentState.STA);
+                    th.Start();*/
+
+                    Form Form1 = new MainForm();
+                    Form1.Show();
+                    Form1.Location = this.Location;
+                    this.Hide();
+
+
                 }
                 else
                 {
@@ -86,6 +100,13 @@ namespace Chat
         private void š(object sender, EventArgs e)
         {
 
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Form RegisterForm = new RegisterForm();
+            RegisterForm.Show();
+            RegisterForm.Location = this.Location;
         }
     }
 }

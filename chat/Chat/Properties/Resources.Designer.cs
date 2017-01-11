@@ -63,9 +63,9 @@ namespace Chat.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap color_matte_black {
+        internal static System.Drawing.Bitmap light_grey_background_pattern_i1 {
             get {
-                object obj = ResourceManager.GetObject("color-matte-black", resourceCulture);
+                object obj = ResourceManager.GetObject("light-grey-background-pattern-i1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Chat.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logini {
+        internal static System.Drawing.Bitmap logini1 {
             get {
-                object obj = ResourceManager.GetObject("logini", resourceCulture);
+                object obj = ResourceManager.GetObject("logini1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Chat.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Psswd {
+        internal static System.Drawing.Bitmap Pass {
             get {
-                object obj = ResourceManager.GetObject("Psswd", resourceCulture);
+                object obj = ResourceManager.GetObject("Pass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Chat.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Usr1 {
+        internal static System.Drawing.Bitmap Usern {
             get {
-                object obj = ResourceManager.GetObject("Usr1", resourceCulture);
+                object obj = ResourceManager.GetObject("Usern", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
