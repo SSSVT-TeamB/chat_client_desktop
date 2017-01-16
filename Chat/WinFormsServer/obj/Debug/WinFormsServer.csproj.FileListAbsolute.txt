@@ -1,0 +1,30 @@
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\SignalRChat.exe.config
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\SignalRChat.exe
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\SignalRChat.pdb
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Cors.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Diagnostics.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Hosting.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Security.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Owin.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\System.Web.Cors.dll
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Cors.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Diagnostics.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Hosting.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Microsoft.Owin.Security.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\obj\Debug\WinFormsServer.csprojResolveAssemblyReference.cache
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\obj\Debug\SignalRChat.Properties.Resources.resources
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\obj\Debug\SignalRChat.WinFormsServer.resources
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\obj\Debug\WinFormsServer.csproj.GenerateResource.Cache
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\obj\Debug\SignalRChat.exe
+C:\Users\Waithere\Desktop\asf\C#\WinFormsServer\obj\Debug\SignalRChat.pdb
+C:\Users\Waithere\Documents\GitSSSVT\chat_client_desktop\Chat v.2\WinFormsServer\bin\Debug\SignalRChat.exe.config
+C:\Users\Waithere\Documents\GitSSSVT\chat_client_desktop\Chat v.2\WinFormsServer\obj\Debug\SignalRChat.exe
+C:\Users\Waithere\Documents\GitSSSVT\chat_client_desktop\Chat v.2\WinFormsServer\obj\Debug\SignalRChat.pdb
