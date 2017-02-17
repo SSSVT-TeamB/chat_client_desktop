@@ -52,11 +52,11 @@
             this.SendBtn = new System.Windows.Forms.Button();
             this.MessageField = new System.Windows.Forms.TextBox();
             this.ChatTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.CloseRegBtn = new System.Windows.Forms.Button();
+            this.currentRoom = new System.Windows.Forms.Label();
             this.SignInPanel.SuspendLayout();
             this.RegPanel.SuspendLayout();
             this.ChatPanel2.SuspendLayout();
-            this.ChatTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // SignInPanel
@@ -69,21 +69,21 @@
             this.SignInPanel.Controls.Add(this.UserNameTextBox);
             this.SignInPanel.Controls.Add(this.label4);
             this.SignInPanel.Controls.Add(this.label5);
-            this.SignInPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SignInPanel.Location = new System.Drawing.Point(0, 0);
+            this.SignInPanel.Location = new System.Drawing.Point(4, 2);
             this.SignInPanel.Name = "SignInPanel";
-            this.SignInPanel.Size = new System.Drawing.Size(880, 596);
+            this.SignInPanel.Size = new System.Drawing.Size(876, 594);
             this.SignInPanel.TabIndex = 0;
             // 
             // StatusTxt
             // 
-            this.StatusTxt.Location = new System.Drawing.Point(285, 32);
+            this.StatusTxt.Location = new System.Drawing.Point(348, 89);
             this.StatusTxt.Name = "StatusTxt";
             this.StatusTxt.Size = new System.Drawing.Size(332, 20);
             this.StatusTxt.TabIndex = 7;
             // 
             // RegPanel
             // 
+            this.RegPanel.Controls.Add(this.CloseRegBtn);
             this.RegPanel.Controls.Add(this.label3);
             this.RegPanel.Controls.Add(this.label2);
             this.RegPanel.Controls.Add(this.label1);
@@ -91,11 +91,12 @@
             this.RegPanel.Controls.Add(this.PasswordReg);
             this.RegPanel.Controls.Add(this.LoginReg);
             this.RegPanel.Controls.Add(this.UsernameReg);
-            this.RegPanel.Location = new System.Drawing.Point(197, 151);
+            this.RegPanel.Location = new System.Drawing.Point(267, 209);
             this.RegPanel.Name = "RegPanel";
             this.RegPanel.Size = new System.Drawing.Size(482, 267);
             this.RegPanel.TabIndex = 5;
             this.RegPanel.Visible = false;
+            this.RegPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.RegPanel_Paint);
             // 
             // label3
             // 
@@ -126,7 +127,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(218, 158);
+            this.button2.Location = new System.Drawing.Point(161, 158);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -159,7 +160,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(412, 320);
+            this.linkLabel1.Location = new System.Drawing.Point(475, 377);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(96, 13);
             this.linkLabel1.TabIndex = 4;
@@ -169,7 +170,7 @@
             // 
             // PasswordTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(347, 262);
+            this.PasswordTextBox.Location = new System.Drawing.Point(410, 319);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.PasswordChar = '♥';
             this.PasswordTextBox.Size = new System.Drawing.Size(226, 20);
@@ -178,7 +179,7 @@
             // 
             // SignInButton
             // 
-            this.SignInButton.Location = new System.Drawing.Point(420, 288);
+            this.SignInButton.Location = new System.Drawing.Point(483, 345);
             this.SignInButton.Name = "SignInButton";
             this.SignInButton.Size = new System.Drawing.Size(75, 23);
             this.SignInButton.TabIndex = 3;
@@ -188,7 +189,7 @@
             // 
             // UserNameTextBox
             // 
-            this.UserNameTextBox.Location = new System.Drawing.Point(347, 236);
+            this.UserNameTextBox.Location = new System.Drawing.Point(410, 293);
             this.UserNameTextBox.Name = "UserNameTextBox";
             this.UserNameTextBox.Size = new System.Drawing.Size(226, 20);
             this.UserNameTextBox.TabIndex = 1;
@@ -197,7 +198,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(282, 239);
+            this.label4.Location = new System.Drawing.Point(345, 296);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(33, 13);
             this.label4.TabIndex = 6;
@@ -206,7 +207,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(282, 265);
+            this.label5.Location = new System.Drawing.Point(345, 322);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 6;
@@ -214,6 +215,7 @@
             // 
             // ChatPanel2
             // 
+            this.ChatPanel2.Controls.Add(this.currentRoom);
             this.ChatPanel2.Controls.Add(this.AddContactBtn);
             this.ChatPanel2.Controls.Add(this.ContactsBtn);
             this.ChatPanel2.Controls.Add(this.RoomsBtn);
@@ -224,15 +226,15 @@
             this.ChatPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ChatPanel2.Location = new System.Drawing.Point(0, 0);
             this.ChatPanel2.Name = "ChatPanel2";
-            this.ChatPanel2.Size = new System.Drawing.Size(880, 596);
+            this.ChatPanel2.Size = new System.Drawing.Size(1027, 676);
             this.ChatPanel2.TabIndex = 3;
             this.ChatPanel2.Visible = false;
             // 
             // AddContactBtn
             // 
-            this.AddContactBtn.Location = new System.Drawing.Point(720, 16);
+            this.AddContactBtn.Location = new System.Drawing.Point(737, 595);
             this.AddContactBtn.Name = "AddContactBtn";
-            this.AddContactBtn.Size = new System.Drawing.Size(94, 23);
+            this.AddContactBtn.Size = new System.Drawing.Size(103, 28);
             this.AddContactBtn.TabIndex = 5;
             this.AddContactBtn.Text = "Add contact";
             this.AddContactBtn.UseVisualStyleBackColor = true;
@@ -240,9 +242,9 @@
             // 
             // ContactsBtn
             // 
-            this.ContactsBtn.Location = new System.Drawing.Point(665, 45);
+            this.ContactsBtn.Location = new System.Drawing.Point(737, 41);
             this.ContactsBtn.Name = "ContactsBtn";
-            this.ContactsBtn.Size = new System.Drawing.Size(91, 23);
+            this.ContactsBtn.Size = new System.Drawing.Size(103, 26);
             this.ContactsBtn.TabIndex = 3;
             this.ContactsBtn.Text = "Contacts";
             this.ContactsBtn.UseVisualStyleBackColor = true;
@@ -250,9 +252,9 @@
             // 
             // RoomsBtn
             // 
-            this.RoomsBtn.Location = new System.Drawing.Point(777, 45);
+            this.RoomsBtn.Location = new System.Drawing.Point(867, 41);
             this.RoomsBtn.Name = "RoomsBtn";
-            this.RoomsBtn.Size = new System.Drawing.Size(91, 23);
+            this.RoomsBtn.Size = new System.Drawing.Size(107, 26);
             this.RoomsBtn.TabIndex = 3;
             this.RoomsBtn.Text = "Rooms";
             this.RoomsBtn.UseVisualStyleBackColor = true;
@@ -263,56 +265,73 @@
             this.UserList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.UserList.FormattingEnabled = true;
             this.UserList.ItemHeight = 16;
-            this.UserList.Location = new System.Drawing.Point(665, 74);
+            this.UserList.Location = new System.Drawing.Point(737, 73);
             this.UserList.Name = "UserList";
-            this.UserList.Size = new System.Drawing.Size(203, 500);
+            this.UserList.Size = new System.Drawing.Size(237, 516);
             this.UserList.TabIndex = 2;
             this.UserList.SelectedIndexChanged += new System.EventHandler(this.UserList_SelectedIndexChanged);
             // 
             // SendBtn
             // 
-            this.SendBtn.Location = new System.Drawing.Point(560, 562);
+            this.SendBtn.Location = new System.Drawing.Point(608, 595);
             this.SendBtn.Name = "SendBtn";
             this.SendBtn.Size = new System.Drawing.Size(99, 23);
             this.SendBtn.TabIndex = 1;
             this.SendBtn.Text = "Send";
             this.SendBtn.UseVisualStyleBackColor = true;
+            this.SendBtn.Click += new System.EventHandler(this.SendBtn_Click);
             // 
             // MessageField
             // 
-            this.MessageField.Location = new System.Drawing.Point(10, 564);
+            this.MessageField.Location = new System.Drawing.Point(29, 595);
             this.MessageField.Name = "MessageField";
             this.MessageField.Size = new System.Drawing.Size(544, 20);
             this.MessageField.TabIndex = 0;
+            this.MessageField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MessageField_KeyDown);
+            this.MessageField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MessageField_KeyPress);
             // 
             // ChatTabControl
             // 
-            this.ChatTabControl.Controls.Add(this.tabPage1);
-            this.ChatTabControl.Location = new System.Drawing.Point(10, 31);
+            this.ChatTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.ChatTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.ChatTabControl.Location = new System.Drawing.Point(28, 12);
             this.ChatTabControl.Name = "ChatTabControl";
             this.ChatTabControl.SelectedIndex = 0;
-            this.ChatTabControl.Size = new System.Drawing.Size(649, 531);
+            this.ChatTabControl.Size = new System.Drawing.Size(679, 577);
             this.ChatTabControl.TabIndex = 0;
+            this.ChatTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ChatTabControl_DrawItem);
+            this.ChatTabControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ChatTabControl_MouseDown);
             // 
-            // tabPage1
+            // CloseRegBtn
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(641, 505);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.CloseRegBtn.Location = new System.Drawing.Point(262, 158);
+            this.CloseRegBtn.Name = "CloseRegBtn";
+            this.CloseRegBtn.Size = new System.Drawing.Size(75, 23);
+            this.CloseRegBtn.TabIndex = 5;
+            this.CloseRegBtn.Text = "Close";
+            this.CloseRegBtn.UseVisualStyleBackColor = true;
+            this.CloseRegBtn.Click += new System.EventHandler(this.CloseRegBtn_Click);
+            // 
+            // currentRoom
+            // 
+            this.currentRoom.AutoSize = true;
+            this.currentRoom.Location = new System.Drawing.Point(737, 12);
+            this.currentRoom.Name = "currentRoom";
+            this.currentRoom.Size = new System.Drawing.Size(0, 13);
+            this.currentRoom.TabIndex = 6;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(880, 596);
+            this.ClientSize = new System.Drawing.Size(1027, 676);
             this.Controls.Add(this.ChatPanel2);
             this.Controls.Add(this.SignInPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Chat";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SignInPanel.ResumeLayout(false);
             this.SignInPanel.PerformLayout();
@@ -320,7 +339,6 @@
             this.RegPanel.PerformLayout();
             this.ChatPanel2.ResumeLayout(false);
             this.ChatPanel2.PerformLayout();
-            this.ChatTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -341,16 +359,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListBox UserList;
         private System.Windows.Forms.Button SendBtn;
         private System.Windows.Forms.TextBox MessageField;
         private System.Windows.Forms.TabControl ChatTabControl;
-        private System.Windows.Forms.Button ContactsBtn;
         private System.Windows.Forms.Button RoomsBtn;
         private System.Windows.Forms.Button AddContactBtn;
         private System.Windows.Forms.TextBox StatusTxt;
         public System.Windows.Forms.Panel ChatPanel2;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button CloseRegBtn;
+        public System.Windows.Forms.ListBox UserList;
+        public System.Windows.Forms.Button ContactsBtn;
+        private System.Windows.Forms.Label currentRoom;
     }
 }
 

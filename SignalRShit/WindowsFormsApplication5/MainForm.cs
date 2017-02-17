@@ -20,6 +20,8 @@ namespace WindowsFormsApplication5
     {
         public User user = null;
         public string u = string.Empty;
+
+        public enum ActionResult { SUCCESS = 0, NOT_ENOUGH_PERMISSIONS = 1, PRIVATE_CHAT = 2, USER_EXISTS = 3, GENERAL_FAIL = 100 }
         private IHubProxy LoginHub { get; set; }
         public IHubProxy UserHub { get; set; }
         private IHubProxy MessageHub { get; set; }
@@ -29,10 +31,13 @@ namespace WindowsFormsApplication5
 
         public List<User> addcontactList = new List<User>();
 
-        public List<string> open = new List<string>();
+        public List<int> open = new List<int>();
+
+        const int LEADING_SPACE = 12;
+        const int CLOSE_SPACE = 15;
+        const int CLOSE_AREA = 20;
 
         public List<Message> messageList = new List<Message>();
-        public enum ActionResult { SUCCESS = 0, NOT_ENOUGH_PERMISSIONS = 1, PRIVATE_CHAT = 2, USER_EXISTS = 3, GENERAL_FAIL = 100 }
 
         public List<ChatRoom> roomList = new List<ChatRoom>();
         public bool inContacts = false;
@@ -48,7 +53,7 @@ namespace WindowsFormsApplication5
             ConnectAsync();
 
         }
-        private async void ConnectAsync()
+        public async void ConnectAsync()
         {
             Connection = new HubConnection(ServerURI);
             Connection.Closed += Connection_Closed;
@@ -79,10 +84,56 @@ namespace WindowsFormsApplication5
         }
         public async void Initialise()
         {
-            contactList = await UserHub.Invoke<List<User>>("GetContacts").ConfigureAwait(false);
-            roomList = await ChatRoomHub.Invoke<List<ChatRoom>>("GetUserRooms").ConfigureAwait(false);
-            addcontactList = await UserHub.Invoke<List<User>>("FindContact", u).ConfigureAwait(false);
-            MessageBox.Show(addcontactList.Count.ToString());
+            await UserHub.Invoke<List<User>>("GetContacts").ContinueWith(task =>
+            {
+                if(task.IsFaulted)
+                {
+                    MessageBox.Show("Hovno");
+                }
+                else
+                {
+                    contactList = task.Result;
+
+                    //this.Invoke((Action)(() =>
+                    //UserList.Items.Clear()));
+
+
+                    /*for (int i = 0; i < contactList.LongCount(); i++)
+                     {
+                         this.Invoke((Action)(() =>
+                     UserList.Items.Add(String.Format(contactList[i].Name))));
+
+                     }*/
+                    this.Invoke((Action)(() =>
+                   ContactsBtn.PerformClick()));
+                   
+                }
+            });
+            await ChatRoomHub.Invoke<List<ChatRoom>>("GetUserRooms").ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    MessageBox.Show("Hovno");
+                }
+                else
+                {
+                    roomList = task.Result;
+                }
+            });
+            await UserHub.Invoke<List<User>>("FindContact", u).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    MessageBox.Show("Hovno");
+                }
+                else
+                {
+                    //addcontactList = task.Result;
+
+                    addcontactList = task.Result;
+
+                }
+            });
         }
         private void Connection_Closed()
         {
@@ -177,17 +228,19 @@ namespace WindowsFormsApplication5
         }
         public void passList(List<User> addcontactList)
         {
-            this.contactList = contactList;
+            this.addcontactList = addcontactList;
         }
+
 
         private void AddContactBtn_Click(object sender, EventArgs e)
         {
-            AddContactForm form2 = new AddContactForm();
+            AddContactForm form2 = new AddContactForm(UserHub);
             form2.passList(this.addcontactList);
             form2.Show();
+            form2.parent = this;
         }
 
-        private void ContactsBtn_Click(object sender, EventArgs e)
+        public void ContactsBtn_Click(object sender, EventArgs e)
         {
             inContacts = true;
             UserList.Items.Clear();
@@ -206,47 +259,58 @@ namespace WindowsFormsApplication5
         private void switchRooms() {
             inContacts = false;
             UserList.Items.Clear();
+            UserList.DisplayMember = "Name";
             for (int i = 0; i < roomList.LongCount(); i++)
             {
-                UserList.Items.Add(String.Format(roomList[i].Name));
+                UserList.Items.Add(roomList[i]);
             }
         }
-        private async void kopec()
-        {
-            
-            roomList = await ChatRoomHub.Invoke<List<ChatRoom>>("GetUserRooms").ConfigureAwait(false);
-
-        }
-        public async void Messages()
+       /* public async void Messages()
         {
             int sel = UserList.SelectedIndex;
             messageList = await MessageHub.Invoke<List<Message>>("GetRoomMessages", roomList[sel].Id).ConfigureAwait(false);
-        }
-
+        }*/
         private async void UserList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (inContacts)
             {
-                int sel = UserList.SelectedIndex;
+                int sel;
+                lock (UserList)
+                {
+                    sel = UserList.SelectedIndex;
+                }
                 //ChatRoom kok = await ChatRoomHub.Invoke<ChatRoom>("CreateRoom", contactList[sel].Id).ConfigureAwait(false);
                 //switchRooms();
                 Task<ChatRoom> tasker = ChatRoomHub.Invoke<ChatRoom>("CreateRoom", contactList[sel].Id);
                 tasker.Wait();
-                kopec();
+                await ChatRoomHub.Invoke<List<ChatRoom>>("GetUserRooms").ContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        MessageBox.Show("Failed to load rooms");
+                    }
+                    else
+                    {
+                        roomList = task.Result;
+                    }
+                });
                 RoomsBtn.PerformClick();
-                
-                
+
+
                 //Task<List<User>> tasker = ChatRoomHub.Invoke<List<User>>("CreateRoom", contactList[sel].Id);
             }
 
             else
             {
-                string title = UserList.SelectedItem.ToString();
+                string title = ((ChatRoom)UserList.SelectedItem).Name;
+                int id = roomList[UserList.SelectedIndex].Id;
+
 
                 bool found = false;
+
                 for (int i = 0; i < open.Count; i++)
                 {
-                    if (open[i] == title)
+                    if (open[i] == id)
                     {
                         found = true;
                         break;
@@ -255,28 +319,149 @@ namespace WindowsFormsApplication5
 
                 if (found == false)
                 {
-                    int sel = UserList.SelectedIndex;
-                    messageList = await MessageHub.Invoke<List<Message>>("GetRoomMessages", roomList[sel].Id).ConfigureAwait(false);
+                    int sel = ((ChatRoom)UserList.SelectedItem).Id;
+                    /* int sel = 0;
+                     if (UserList.InvokeRequired)
+                     UserList.Invoke((MethodInvoker)
+                         delegate
+                         {
+                             sel = ((ChatRoom)UserList.SelectedItem).Id;
+                         });
+                     else
+                         sel = ((ChatRoom)UserList.SelectedItem).Id;
+                         */
+                    open.Add(id);
+                    
+                    TabPage page = new TabPage();
+                    RichTextBox rtb = new RichTextBox();
+                    page.Text = title;
+                    page.Controls.Add(rtb);
+                    ChatTabControl.TabPages.Add(page);
+                    rtb.Dock = DockStyle.Fill;
+                    rtb.ReadOnly = true;
+                    ChatTabControl.SizeMode = TabSizeMode.Fixed;
+                    Tabdraw();
+                    //currentRoom.Text = id.ToString();
+                    
+                    MessageHub.On<Message, ChatRoom>("OnNewMessage", (Message message, ChatRoom room) => {
+                        if(room.Id == id)
+                        {
+                            this.Invoke((Action)(() =>
+                            rtb.AppendText(message.Sender.Name + ": " + message.Text + "\n")));
+                        }
+                        
+                    });
 
-                    open.Add(UserList.SelectedItem.ToString());
-                    TabPage myTabPage = new TabPage(title);
-                    ChatTabControl.TabPages.Add(myTabPage);
-                    var newRichTextBox = new RichTextBox()
-                    {
-                        Dock = 
-                        };
+                    await MessageHub.Invoke<List<Message>>("GetRoomMessages", sel).ContinueWith(task =>
+                        {
+                            if (task.IsFaulted)
+                            {
+                                MessageBox.Show("Failed to load messages");
+                            }
+                            else
+                            {
+                                messageList = task.Result;
+                            }
+                        });
 
+
+                    foreach (Message m in messageList) {
+
+                        //rtb.Text += m.Text + "\n";
+                        rtb.AppendText(m.Sender.Name + ": " + m.Text + "\n");
+
+                    }
                 }
-
-
             }
+        }
 
+        public void Tabdraw()
+        {
+            int tabLength = ChatTabControl.ItemSize.Width;
+
+            for (int i = 0; i < this.ChatTabControl.TabPages.Count; i++)
+            {
+                TabPage currentPage = ChatTabControl.TabPages[i];
+
+                int currentTabLength = TextRenderer.MeasureText(currentPage.Text, ChatTabControl.Font).Width;
+                // adjust the length for what text is written
+                currentTabLength += LEADING_SPACE + CLOSE_SPACE + CLOSE_AREA;
+
+                if (currentTabLength > tabLength)
+                {
+                    tabLength = currentTabLength;
+                }
             }
+            Size newTabSize = new Size(tabLength, ChatTabControl.ItemSize.Height);
+            ChatTabControl.ItemSize = newTabSize;
+        }
+
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
+
+        private void ChatTabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.Graphics.DrawString("X", e.Font, Brushes.Black, e.Bounds.Right - CLOSE_AREA, e.Bounds.Top + 4);
+            e.Graphics.DrawString(this.ChatTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + LEADING_SPACE, e.Bounds.Top + 4);
+            e.DrawFocusRectangle();
+        }
+
+        private void ChatTabControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < this.ChatTabControl.TabPages.Count; i++)
+            {
+                Rectangle r = ChatTabControl.GetTabRect(i);
+                Rectangle closeButton = new Rectangle(r.Right - CLOSE_AREA, r.Top + 4, 9, 7);
+                if (closeButton.Contains(e.Location))
+                {
+                    if (MessageBox.Show("Would you like to Close this Tab?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        this.ChatTabControl.TabPages.RemoveAt(i);
+                        open.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private async void SendBtn_Click(object sender, EventArgs e)
+        {
+            ActionResult res = await MessageHub.Invoke<ActionResult>("NewMessage", MessageField.Text, open[ChatTabControl.SelectedIndex]).ConfigureAwait(false);
+            this.Invoke((Action)(() =>
+                    MessageField.Text = string.Empty));
+
+
+
+        }
+
+        private void MessageField_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
+
+        private async void MessageField_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ActionResult res = await MessageHub.Invoke<ActionResult>("NewMessage", MessageField.Text, open[ChatTabControl.SelectedIndex]).ConfigureAwait(false);
+                this.Invoke((Action)(() =>
+                        MessageField.Text = string.Empty));
+            }
+        }
+
+        private void CloseRegBtn_Click(object sender, EventArgs e)
+        {
+            RegPanel.Hide();
+        }
+
+        private void RegPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
+
     }
 

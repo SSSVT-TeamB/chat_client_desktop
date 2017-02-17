@@ -70,6 +70,7 @@
             this.Controls.Add(this.AddContactL);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.AddBtn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddContactForm";
             this.Text = "AddContactForm";
             this.Load += new System.EventHandler(this.AddContactForm_Load);
